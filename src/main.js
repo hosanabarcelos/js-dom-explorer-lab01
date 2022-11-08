@@ -1,4 +1,5 @@
 import "./css/index.css";
+import IMask from 'imask';
 
 const ccBgColor01 = document.querySelector(".cc-bg svg > g g:nth-child(1) path");
 const ccBgColor02 = document.querySelector(".cc-bg svg > g g:nth-child(2) path");
@@ -22,3 +23,13 @@ function setCardType(type) {
 setCardType("visa");
 
 globalThis.setCardType = setCardType;
+
+
+//masks for inputs
+
+//cvc
+const securityCode = document.querySelector("#security-code");
+const securityCodePattern = {
+  mask: "0000",
+}
+const securityCodeMasked = IMask(securityCode, securityCodePattern);
