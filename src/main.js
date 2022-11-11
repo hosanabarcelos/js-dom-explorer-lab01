@@ -20,7 +20,7 @@ function setCardType(type) {
 
 }
 
-setCardType("visa");
+setCardType("default");
 
 globalThis.setCardType = setCardType;
 
@@ -59,8 +59,8 @@ const cardNumberPattern = {
     mask: [
         {
             mask: "0000 0000 0000 0000",
-            regex: /^4\d{0, 15}/,
-            cardtype: "visa"
+            regex: /^4\d{0,15}/,
+            cardtype: "visa",
         },
         {
             mask: "0000 0000 0000 0000",
@@ -69,7 +69,7 @@ const cardNumberPattern = {
         },
         {
             mask: "0000 0000 0000 0000",
-            cardtype: "default"
+            cardtype: "default",
         }
     ],
     dispatch: function(appended, dynamicMasked) {
@@ -82,3 +82,52 @@ const cardNumberPattern = {
     }
 }
 const cardNumberMasked = IMask(cardNumber, cardNumberPattern);
+
+//event button click
+const addButton = document.querySelector("#add-card");
+addButton.addEventListener("click", () => {
+    alert('Pagamento confirmado!');
+});
+
+document.querySelector("form").addEventListener("submit", (event) => {
+    event.preventDefault();
+});
+
+//logic to get name
+const cardHolder = document.querySelector("#card-holder");
+cardHolder.addEventListener("input", () => {
+    const ccHolder = document.querySelector(".cc-holder .value");
+    ccHolder.innerText = cardHolder.value.length >= 1 ? cardHolder.value : 'Fulano de Tal';
+});
+
+//logic to get cvv
+securityCodeMasked.on("accept", () => {
+    updateSecurityCode(securityCodeMasked.value);
+});
+function updateSecurityCode(code) {
+    const ccSecurity = document.querySelector(".cc-security .value");
+    ccSecurity.innerText = code.length >= 1 ? code : "999";
+}
+
+//logic to get card number
+cardNumberMasked.on("accept", () => {
+    const cardType = cardNumberMasked.masked.currentMask.cardtype;
+
+    setCardType(cardType);
+    updatedCardNumber(cardNumberMasked.value);
+});
+function updatedCardNumber(number) {
+    const ccNumber = document.querySelector(".cc-number");
+    ccNumber.innerText = number.length >= 1 ? number : "1234 5678 9012 3456";
+}
+
+//logic to get expiration date
+expirationDateMasked.on("accept", () => {
+    updateExpirationDate(expirationDateMasked.value);
+});
+function updateExpirationDate(date) {
+    const ccExpiration = document.querySelector(".cc-extra .value");
+    ccExpiration.innerText = date.length >= 1 ? date : "12/27"
+}
+
+
