@@ -25,7 +25,7 @@ Tecnologias utilizadas no desenvolvimento:
 
 Clonando o projeto:
 ```bash
-$ git clone https://github.com/hosanabarcelos/monsterspay-explorer-lab-01.git
+$ git clone https://github.com/hosanabarcelos/monsterspay.git
 ```
 
 Rodando:
